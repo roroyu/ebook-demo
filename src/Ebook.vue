@@ -25,10 +25,11 @@
 </template>
 
 <script>
+// import router from './router'
 import TitleBar from '@/components/TitleBar'
 import MenuBar from '@/components/MenuBar'
 import Epub from 'epubjs'
-const DOWNLOAD_URL = '/static/2018_Book_AgileProcessesInSoftwareEngine.epub'
+// const DOWNLOAD_URL = '/static/mori.epub'
 global.ePub = Epub
 export default {
   components: {
@@ -146,9 +147,9 @@ export default {
       }
     },
     // 电子书的解析和渲染
-    showEpub() {
+    showEpub(file) {
       // 生成Book对象
-      this.book = new Epub(DOWNLOAD_URL)
+      this.book = new Epub(file)
       // 通过Book.renderTo生成Rendition对象
       this.rendition = this.book.renderTo('read', {
         width: window.innerWidth,
@@ -180,7 +181,13 @@ export default {
     }
   },
   mounted() {
-    this.showEpub()
+    console.log('mounted')
+    // console.log(router)
+    // console.log(router.params)
+    console.log(this.$route.params)
+    console.log(this.$route.query)
+    const { file } = this.$route.query
+    this.showEpub(file)
   }
 }
 </script>
